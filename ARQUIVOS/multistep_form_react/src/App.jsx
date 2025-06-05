@@ -8,9 +8,17 @@ import Steps from './components/Steps';
 
 // Hooks
 import { useForm } from "./hooks/userForm";
+import { useState } from 'react';
 
 
 import './App.css';
+
+const formTemplates = {
+  name: "",
+  email: "",
+  review: "",
+  comment: "",
+};
 
 import React from "react";
 import { GrFormNext } from "react-icons/gr";
@@ -22,7 +30,22 @@ import ReviewForm from "./ReviewForm";
 import Thanks from "./Thanks";
 
 function App() {
-  const formComponents = [<UserForm />, <ReviewForm />, <Thanks />];
+  const [data, setData] = useState(formTemplates);
+
+  const updateFielHandler = (key, value) => {
+    setData ((prev) => {
+      return {
+        ...prev,
+        [key]: value };
+    });
+  };
+   
+
+  const formComponents = [
+  <UserForm data={data} updateFielHandler={updateFielHandler} />,
+   <ReviewForm data={data} updateFielHandler={updateFielHandler} />,
+   <Thanks data={data} />,
+  ];
 
   const {
     currentStep,
